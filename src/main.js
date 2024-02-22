@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import './style.css'
-import DemoApp from './DemoApp.vue'
+import Calender from './CalenderComponent.vue'
 
-createApp(DemoApp).mount('#app')
+const app = createApp(Calender)
+
+app.mount('#app')

@@ -1,16 +1,14 @@
 <template>
-
+   
   <div class='demo-app'>
-    <side-bar>
-
-      
-    </side-bar>
+    
 
     <div class='demo-app-main'>
       <FullCalendar  :options="calendarOptions" />
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, watch } from 'vue';
@@ -21,7 +19,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 
 
-const fullCalendarRef = ref(null);
+const fullCalendarRef = ref("");
 const searchDate = ref('');
 
 
@@ -33,7 +31,7 @@ const calendarOptions = {
   headerToolbar: {
     left: 'prev today next',
     center: 'title',
-    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    right: 'dayGridMonth timeGridWeek timeGridDay'
   },
 
 
@@ -48,7 +46,7 @@ const calendarOptions = {
 };
 
 function handleDateSelect(selectInfo) {
-  const title = prompt('Please enter a new title for your event');
+  const title = prompt('Please enter your event');
   if (title) {
     const calendarApi = selectInfo.view.calendar;
     calendarApi.addEvent({
@@ -70,6 +68,7 @@ watch(searchDate, () => {
 });
 function highlightDate() {
   const calendarApi = fullCalendarRef.value.getApi();
+  
   if (searchDate.value) {
     calendarApi.gotoDate(searchDate.value);
     const backgroundEvents = calendarApi.getEvents().filter(event => event.groupId === 'backgroundHighlight');
@@ -120,19 +119,13 @@ b {
   flex-grow: 1;
   padding: 3em;
   background-color: rgb(255, 255, 255);
-  color: rgb(0, 64, 80);
+  color: rgb(4, 80, 95);
 }
 .fc { 
   max-width: 1100px;
   margin: 0 auto;
-  color: rgb(9, 66, 99)
+  color: rgb(5, 79, 109)
 }
-.search-container{
-  margin-top: 20px;
-  width:100vw;
-  height:50px;
-}
-
 
 
 
