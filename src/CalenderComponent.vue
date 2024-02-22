@@ -1,27 +1,35 @@
 <template>
+ 
+    <div class="load" v-if="showLoad">
+      <spinner class="spinner">  <half-circle-spinner
+  :animation-duration="1000"
+  :size="70"
+  color="	#4682B4" />
+   </spinner>
+         </div> 
    
-  <div class='demo-app'>
-    
+       <div v-else>
+      <div class='demo-app' >
+        <div class='demo-app-main'>
+          <FullCalendar :options="calendarOptions" />
+        </div>
+      </div>
+      </div>
 
-    <div class='demo-app-main'>
-      <FullCalendar  :options="calendarOptions" />
-    </div>
-  </div>
 </template>
 
-
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
-
+import { HalfCircleSpinner } from 'epic-spinners'
 
 const fullCalendarRef = ref("");
 const searchDate = ref('');
-
+const showLoad = ref(true);
 
 const calendarOptions = {
   plugins: [dayGridPlugin, timeGridPlugin,interactionPlugin],
@@ -45,6 +53,15 @@ const calendarOptions = {
   eventClick: handleEventClick,
 };
 
+async function loadFullCalendar() {
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  showLoad.value = false;
+}
+
+onMounted(() => {
+  loadFullCalendar();
+});
+
 function handleDateSelect(selectInfo) {
   const title = prompt('Please enter your event');
   if (title) {
@@ -58,14 +75,13 @@ function handleDateSelect(selectInfo) {
     });
   }
 }
+
 function handleEventClick(clickInfo) {
   if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'?`)) {
     clickInfo.event.remove();
   }
 }
-watch(searchDate, () => {
-  highlightDate();
-});
+
 function highlightDate() {
   const calendarApi = fullCalendarRef.value.getApi();
   
@@ -83,6 +99,8 @@ function highlightDate() {
   }
 }
 </script>
+
+
 <style scoped>
 h2 {
   margin: 0;
@@ -127,6 +145,17 @@ b {
   color: rgb(5, 79, 109)
 }
 
+.load{
+  height: 100px;
+width: 100px;
 
+}
+
+.spinner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+}
 
 </style>

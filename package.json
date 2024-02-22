@@ -9,6 +9,7 @@
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
     "@fullcalendar/vue3": "^6.1.10",
+    "epic-spinners": "^2.0.0",
     "vue": "^3.2.45"
   },
   "devDependencies": {
